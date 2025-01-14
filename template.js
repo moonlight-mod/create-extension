@@ -10,7 +10,6 @@ export async function buildBase(projectName) {
 
   const baseFiles = [
     ".github/workflows/deploy.yml",
-    ".gitignore",
 
     ".prettierrc",
     ".prettierignore",
@@ -24,6 +23,11 @@ export async function buildBase(projectName) {
 
   for (const file of baseFiles) files[file] = await read(file);
   files["package.json"] = await read("package.json").then((r) => r.replace("sample-extension", projectName));
+  // npm is too smart about stripping files
+  files[".gitignore"] = `/dist
+/repo
+/node_modules
+`;
 
   return files;
 }

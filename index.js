@@ -27,7 +27,7 @@ if (await exists(packageJson)) {
   while (true) {
     extId = await input({ message: "Choose an extension ID:", default: "sampleExtension" });
     const extDir = path.join("./src", extId);
-    if (await exists(extDir)) {
+    if ((await exists(extDir)) && (await fs.readdir(extDir)).length !== 0) {
       console.log("Extension already exists - please choose another.");
     } else {
       break;
@@ -45,7 +45,7 @@ if (await exists(packageJson)) {
   let dir;
   while (true) {
     dir = await input({ message: "Choose a directory:", default: "./my-moonlight-extensions" });
-    if (await exists(dir)) {
+    if ((await exists(dir)) && (await fs.readdir(dir)).length !== 0) {
       console.log("Directory already exists - please choose another.");
     } else {
       break;
