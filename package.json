@@ -1,0 +1,13 @@
+{
+  "name": "@moonlight-mod/create-extension",
+  "version": "1.0.0",
+  "main": "index.js",
+  "bin": "index.js",
+  "type": "module",
+  "dependencies": {
+    "@inquirer/prompts": "^7.2.3"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2"
+  }
+}
