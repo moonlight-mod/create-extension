@@ -65,6 +65,7 @@ if (await exists(packageJson)) {
   console.log("Done. Now run:\n");
   console.log(`$ cd ${dir}`);
   console.log("$ pnpm i");
+  console.log("$ git init");
   console.log("\nGood luck! Feel free to reach out:");
   console.log("Docs: https://moonlight-mod.github.io/ext-dev/getting-started");
   console.log("Discord server: https://discord.gg/FdZBTFCP6F");
