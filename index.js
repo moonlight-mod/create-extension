@@ -3,6 +3,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { input } from "@inquirer/prompts";
 import { buildBase, buildExt } from "./template.js";
+import chalk from "chalk";
 
 const exists = (path) =>
   fs
@@ -29,7 +30,9 @@ if (await exists(packageJson)) {
     extId = await input({ message: "Choose an extension ID:", default: "sampleExtension" });
     const extDir = path.join("./src", extId);
     if ((await exists(extDir)) && (await fs.readdir(extDir)).length !== 0) {
-      console.log("Extension already exists - please choose another.");
+      console.log(
+        `${chalk.bgRed("[error]")} Extension already exists ${chalk.grey("-")} please choose another directory.`
+      );
     } else {
       break;
     }
@@ -41,13 +44,15 @@ if (await exists(packageJson)) {
 
   console.log("Done.");
 } else {
-  console.log(`${moonEmoji} Creating new project.`);
+  console.log(`${moonEmoji} Creating new extension.`);
 
   let dir;
   while (true) {
     dir = await input({ message: "Choose a directory:", default: "./my-moonlight-extensions" });
     if ((await exists(dir)) && (await fs.readdir(dir)).length !== 0) {
-      console.log("Directory already exists - please choose another.");
+      console.log(
+        `${chalk.bgRed("[error]")} Directory already exists ${chalk.grey("-")} please choose another directory.`
+      );
     } else {
       break;
     }
@@ -63,11 +68,11 @@ if (await exists(packageJson)) {
 
   await write(dir, tmpl);
 
-  console.log("Done. Now run:\n");
-  console.log(`$ cd ${dir}`);
-  console.log("$ pnpm i");
-  console.log("$ git init");
+  console.log(`${chalk.green("Done!")} ${chalk.grey("Now run:")}\n`);
+  console.log(`${chalk.blue("$")} cd ${dir}`);
+  console.log(`${chalk.blue("$")} pnpm i`);
+  console.log(`${chalk.blue("$")} git init`);
   console.log("\nGood luck! Feel free to reach out:");
-  console.log("Docs: https://moonlight-mod.github.io/ext-dev/getting-started");
-  console.log("Discord server: https://discord.gg/FdZBTFCP6F");
+  console.log(`${chalk.blueBright("Docs:")} ${chalk.grey("https://moonlight-mod.github.io/ext-dev/getting-started")}`);
+  console.log(`${chalk.blueBright("Discord:")} ${chalk.grey("https://discord.gg/FdZBTFCP6F")}`);
 }
