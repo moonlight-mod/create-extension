@@ -22,7 +22,18 @@ export async function buildBase(projectName) {
   ];
 
   for (const file of baseFiles) files[file] = await read(file);
-  files["package.json"] = await read("package.json").then((r) => r.replace("sample-extension", projectName));
+
+  const packageJSON = JSON.parse(await read("package.json"));
+  packageJSON.name = projectName;
+
+  const typesPackage = await fetch("https://registry.npmjs.com/@moonlight-mod/types", {
+    headers: {
+      "User-Agent": "@moonlight-mod/create-extension (+https://github.com/moonlight-mod/create-extension)"
+    }
+  }).then((r) => r.json());
+  packageJSON.dependencies["@moonlight-mod/types"] = "^" + typesPackage["dist-tags"]["latest"];
+  files["package.json"] = JSON.stringify(packageJSON, null, 2);
+
   // npm is too smart about stripping files
   files[".gitignore"] = `/dist
 /repo
