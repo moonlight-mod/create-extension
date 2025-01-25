@@ -55,7 +55,7 @@ declare module "@moonlight-mod/wp/${extId}_someLibrary" {
 `;
     files["env.d.ts"] = str;
   } else {
-    files["env.d.ts"] = await read("env.d.ts").then((r) => r.replace("sampleExtension", extId));
+    files["env.d.ts"] = await read("env.d.ts").then((r) => r.replaceAll("sampleExtension", extId));
   }
 
   const extSpecific = [
