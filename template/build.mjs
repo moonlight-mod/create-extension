@@ -13,11 +13,12 @@ if (clean) {
   const exts = fs.readdirSync("./src");
 
   for (const ext of exts) {
+    /** @type {import("@moonlight-mod/esbuild-config").ESBuildFactoryOptions} */
     const cfg = {
-      src: path.resolve(path.join("src", ext)),
-      dst: path.resolve(path.join("dist", ext)),
-      esm: esm.includes(ext),
-      ext
+      ext,
+      entry: path.resolve(path.join("src", ext)),
+      output: path.resolve(path.join("dist", ext)),
+      esm: esm.includes(ext)
     };
 
     if (watch) {
